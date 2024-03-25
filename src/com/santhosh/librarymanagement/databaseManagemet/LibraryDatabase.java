@@ -182,22 +182,7 @@ public class LibraryDatabase {
 			e.printStackTrace();
 			return null;
 		}
-		
-		
-		
-		
-//		try {
-//			   File file = new File("C:\\Users\\santh\\eclipse-workspace\\Library Management 2024\\src\\com\\santhosh\\librarymanagement\\JsonFile\\user.json");
-//		userList= mapper.readValue(file,
-//                    new TypeReference<List<User>>() {});
-//            
-//            mapper.writeValue(file, userList);
-//             userList = mapper.readValue(new File("C:\\Users\\santh\\eclipse-workspace\\Library Management 2024\\src\\com\\santhosh\\librarymanagement\\JsonFile\\user.json"),
-//                     new TypeReference<List<User>>() {});
-//		} catch (IOException e) {
-//             e.printStackTrace();
-//         }		
-//		 return userList;
+	
 	}
 
 	public void insertIssuedBooks(Map<String, Book> mapbooktocustomer) {
