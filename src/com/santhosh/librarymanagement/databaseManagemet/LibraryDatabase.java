@@ -30,16 +30,10 @@ public class LibraryDatabase {
     private String mappedBookFile="C:\\Users\\santh\\eclipse-workspace\\Library Management 2024\\src\\com\\santhosh\\librarymanagement\\JsonFile\\mappedBooks.json";
 	private String UserCredentials="C:\\Users\\santh\\eclipse-workspace\\Library Management 2024\\src\\com\\santhosh\\librarymanagement\\JsonFile\\UserCredentials.json";
     private String libraryFile="C:\\Users\\santh\\eclipse-workspace\\Library Management 2024\\src\\com\\santhosh\\librarymanagement\\JsonFile\\Library.json";
-	
-	//	private  List<Map<String, Book>> existingmappedbooks;
-//	private  List<Book> existingBooks;
-//	private List<User> existingUsers;
     ObjectMapper mapper=new ObjectMapper();
 	
 	private LibraryDatabase() {
-//		this.existingUsers=new ArrayList<User>();
-//		this.existingBooks=new ArrayList<Book>();
-//		this.existingmappedbooks=new ArrayList<Map<String,Book>>();
+
 		this.books = new ArrayList<>();
 		this.userList = new ArrayList<>();
 		this.issuedBooks = new ArrayList<>();
@@ -95,17 +89,28 @@ public class LibraryDatabase {
 				}
 				
 				books.add(book);
-				bookObj.writeValue(fileCandidate, books);
+				writeData(books);
 				return true;
 			} else {
 					books.add(book);		
-				bookObj.writeValue(fileCandidate, books);
+					writeData(books);
 				return true;}
 		} catch (Exception e) {
 			System.out.println("interviewer");
 		}
 		return false;
 		
+	}
+	
+	public void writeData(List<Book> books) {
+		ObjectMapper obj=new ObjectMapper();
+		File f=new File(bookFile);
+		try {
+		obj.writeValue(f, books);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Book> showBooks() {
@@ -153,13 +158,11 @@ public class LibraryDatabase {
 	}
 
 	public void removeandUpdateUser(User updateUser) {
-		System.out.println("update");
 		ObjectMapper userObj=new ObjectMapper();
 		try {
 		userList=userObj.readValue(new File(userFile), new TypeReference<List<User>>() {});; 
 		for(User u:userList) {
 			 if(u.getUserName().equals(updateUser.getUserName())) {
-				 System.out.println("update");
 				 FileWriter file=new FileWriter(userFile,false);
 				 userList.remove(u);
 				 System.out.println(insertUser(updateUser));
@@ -182,7 +185,6 @@ public class LibraryDatabase {
 			e.printStackTrace();
 			return null;
 		}
-	
 	}
 
 	public void insertIssuedBooks(Map<String, Book> mapbooktocustomer) {
@@ -259,7 +261,6 @@ public class LibraryDatabase {
 		books=bookObj.readValue(new File(bookFile), new TypeReference<List<Book>>() {});; 
 		for(Book b:books) {
 			 if(b.getName().equals(updateBook.getName())) {
-				 System.out.println("update");
 				 FileWriter file=new FileWriter(bookFile,false);
 				 books.remove(b);
 				 System.out.println(insertBooks(updateBook));
@@ -274,26 +275,16 @@ public class LibraryDatabase {
 
 	public void deleteBook(Book deleteBook) {
 		ObjectMapper deleteObj=new ObjectMapper();
-		int count=1;
 		try {
 		books=deleteObj.readValue(new File(bookFile), new TypeReference<List<Book>>() {});; 
 		for(Book b:books) {
-			 if(b.getName().equals(deleteBook.getName())) {
-				 System.out.println("delete");
+			 if(b.getId()==(deleteBook.getId())) {
 				 FileWriter file=new FileWriter(bookFile,false);
 				 books.remove(b);
-//				 break;
+				 break;
+			    }
 			 }
-			 count++;
-		 }
-		System.out.println(count);
-		 for(Book b:books) {
-			 System.out.println(books.size());
-//			 if(books.size())
-			 insertBooks(b);
-			 System.out.println(b.getName());
-			 
-		 }
+		writeData(books);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
