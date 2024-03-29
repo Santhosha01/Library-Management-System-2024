@@ -11,13 +11,16 @@
             * Search Book 
             * Delete Book 
             * Update Book 
-            * Manage User 
+            * Manage User   
+                 1.Add User 
+                 2.Update User 
+                 3.Delete user 
+                 4.View User 
             * View Users 
             * Show Issued Books 
             * Library Details 
             * Log out   
 
- 
        2.Customer 
   
             * View Books 
